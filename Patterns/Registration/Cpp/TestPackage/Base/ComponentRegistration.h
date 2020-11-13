@@ -6,17 +6,30 @@
 #include <functional>
 #include <memory>
 
-using umap = std::unordered_map<std::string, std::function<std::shared_ptr<ComponentBase>(void)>>;
+namespace singleton {
 
 class ComponentRegistration {
     public:
-        ComponentRegistration() = delete;
+        using createMethodType = std::function<std::shared_ptr<ComponentBase>(void)>;
+        using umap = std::unordered_map<std::string, createMethodType>;
 
-        static void registerComponent(const std::string &name);
-        static umap getRegistry();
+        void registerComponent(const std::string &name, createMethodType const& method);
+        umap getRegistry();
 
     private:
-        static umap registry;
+        ComponentRegistration();
+        ~ComponentRegistration();
+
+    private:
+        umap _registry;
+
+        friend ComponentRegistration& registry();
 };
 
+inline ComponentRegistration& registry() {
+    static ComponentRegistration instance;
+    return instance;
+}
+
+} // Namespace: Singleton
 #endif // COMPONENT_REGISTRATION_H_9CV0

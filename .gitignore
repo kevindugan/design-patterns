@@ -3,3 +3,6 @@ __pycache__
 
 # Cpp Generated Files
 [Bb][Uu][Ii][Ll][Dd]
+
+# VS Code
+.vscode

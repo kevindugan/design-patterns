@@ -5,7 +5,7 @@
 #include <iterator>
 
 std::shared_ptr<ComponentBase> ComponentBuilder::build(const std::string &name){
-    auto registry = ComponentRegistration::getRegistry();
+    auto registry = singleton::registry().getRegistry();
     // Check that requested component is in registry
     if (registry.find(name) == registry.end()){
         // Gather Keys

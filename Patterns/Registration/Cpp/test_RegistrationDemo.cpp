@@ -22,24 +22,19 @@ TEST(RegistrationDemo, UseRegistration){
     }
 
     // Try to use class not registered to builder
-    // ASSERT_THROW(ComponentBuilder::build("Decoy"), std::exception);
+    ASSERT_THROW(ComponentBuilder::build("Decoy"), std::exception);
 }
 
 TEST(RegistrationDemo, RegisterClass){
-    #include "ComponentBase.h"
 
-    // // Register new class which inherits from Base
-    // class MyClass : public ComponentBuilder {
-    //     public:
-    //         std::string required() {return "MyClass Required";}
-    // };
-    // // Register here
+    // Register new class which inherits from Base
+    class MyClass : public ComponentBase {
+        public:
+            std::string required() {return "MyClass Required";}
+    };
+    singleton::registry().registerComponent("MyClass", [](){return std::make_shared<MyClass>();});
 
-    // // Check that new class is available to builder
-    // auto testComp = ComponentBuilder::build("MyClass");
-    // EXPECT_STREQ(testComp->required().c_str(), "MyClass Required");
-
-    // // Registering a class which doesn't inherit from Base should fail
-    // class MyClass2 {};
-    // // ASSERT_THROW(register, std::exception);
+    // Check that new class is available to builder
+    auto testComp = ComponentBuilder::build("MyClass");
+    EXPECT_STREQ(testComp->required().c_str(), "MyClass Required");
 }
