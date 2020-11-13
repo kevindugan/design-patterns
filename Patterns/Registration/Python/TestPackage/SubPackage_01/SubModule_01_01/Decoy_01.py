@@ -1,0 +1,3 @@
+
+class Decoy():
+    pass
