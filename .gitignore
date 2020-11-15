@@ -1,1 +1,6 @@
+# Python generated files
 __pycache__
+
+# Cpp generated files
+[Bb][Uu][Ii][Ll][Dd]
+.vscode
